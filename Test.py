@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 
 def load_data_dun():
-    df = pd.read_csv('politiko 2/prn14_result_dun.csv')
+    df = pd.read_csv('/data/prn14_result_dun.csv')
     df.drop(['Unnamed: 0'], axis=1, inplace=True)
     return df
 
