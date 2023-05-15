@@ -1,8 +1,8 @@
-import pandas as pd
 import streamlit as st
+import pandas as pd
 
 def load_data_dun():
-    df = pd.read_csv('/data/prn14_result_dun.csv')
+    df = pd.read_csv('data/prn_result_dun.csv')
     df.drop(['Unnamed: 0'], axis=1, inplace=True)
     return df
 
@@ -20,5 +20,6 @@ total_win = count_wins.append(total_wins.rename('TOTAL'))
 # Display the results in a table on Streamlit
 st.write("Total Wins by State and Abbreviation")
 st.dataframe(total_win, use_container_width=True)
+
 
 
