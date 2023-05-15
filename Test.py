@@ -1,12 +1,23 @@
 import pandas as pd
 import streamlit as st
 
-# Load data into a pandas DataFrame
-data = pd.read_csv("politiko 2/prn14_result_dun.csv")
+def load_data_dun():
+    df = pd.read_csv('politiko 2/prn14_result_dun.csv')
+    df.drop(['Unnamed: 0'], axis=1, inplace=True)
+    return df
 
-# Group data by state and abbreviation, and calculate the sum of wins for each group
-totals = data.groupby(["NEGERI", "PARTI"])["STATUS"].sum().reset_index()
+df_dun = load_data_dun()
+
+# Calculate total wins by state and abbreviation
+    count_wins = df_dun[df_dun['STATUS'] == 'MENANG'].pivot_table(index='NEGERI', columns='PARTI', values='STATUS', aggfunc='count', fill_value=0)
+
+    # Calculate total wins for each abbreviation across all states
+    total_wins = count_wins.sum().astype(int)
+
+    # Add a row for total wins for all states for each abbreviation
+    total_win = count_wins._append(total_wins.rename('TOTAL'))
 
 # Display the results in a table on Streamlit
 st.write("Total Wins by State and Abbreviation")
-st.dataframe(totals)
+st.dataframe(total_win, use_container_width=True)
+
